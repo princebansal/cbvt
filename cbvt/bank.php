@@ -4,13 +4,13 @@
 	$database = $connection->CBVT;
 	$requests = $database->createCollection("requests");
 
-	$requestType = array('dmvapproved' => false, 'requestdenied' => false);
+	$requestType = array('bankapproved' => false, 'dmvapproved' => true, 'requestdenied' => false);
 
 	$travelrequests = $requests->find($requestType);
 
 	foreach($travelrequests as $tr){
 		echo $tr["licensenumber"];
 		$id = $tr["_id"];
-		echo '<a href="approverequest.php?id=';echo $id;echo '" >Approve</a>';
+		echo '<a href="bankapproverequest.php?id=';echo $id;echo '" >Approve</a>';
 	}
 ?>

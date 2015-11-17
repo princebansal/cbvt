@@ -33,7 +33,10 @@
 			"loannumber" => $loannumber,
 			"companyname" => $companyname,
 			"policynumber" => $policynumber,
-			"requeststatus" => false
+			"requeststatus" => false,
+			"dmvapproved" => false,
+			"bankapproved" => false,
+			"requestdenied" => false
 		);
 
 	$requests->insert($requestinfo);
