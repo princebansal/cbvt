@@ -10,14 +10,18 @@
 
 	$user = $dmv->find($dmvinfo);
 
-	$count = count($user);
-
-	if($count === 1){
-		$dmv->insert($dmvinfo);
-		header('Location: http://localhost/cbvt/dmv.php');
+	foreach($user as $tr){
+		$id = $tr["_id"];
+		header('Location: http://localhost/cbvt/dmv.php?id='.$id);
+		exit();
 	}
-	else{
-		header('Location: http://localhost/cbvt/dmv.php');
+
+	$dmv->insert($dmvinfo);
+	$user = $dmv->find($dmvinfo);
+	foreach($user as $tr){
+		$id = $tr["_id"];
+		header('Location: http://localhost/cbvt/dmv.php?id='.$id);
+		exit();
 	}
 
 ?>

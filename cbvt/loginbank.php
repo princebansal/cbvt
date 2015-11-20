@@ -10,14 +10,17 @@
 
 	$bank = $banks->find($bankinfo);
 
-	$count = count($bank);
-
-	if($count === 1){
-		$banks->insert($bankinfo);
-		header('Location: http://localhost/cbvt/bank.php');
-	}
-	else{
-		header('Location: http://localhost/cbvt/bank.php');
+	foreach($bank as $tr){
+		$id = $tr["_id"];
+		header('Location: http://localhost/cbvt/bank.php?id='.$id);
+		exit();
 	}
 
+	$banks->insert($bankinfo);
+	$bank = $banks->find($bankinfo);
+	foreach($bank as $tr){
+		$id = $tr["_id"];
+		header('Location: http://localhost/cbvt/bank.php?id='.$id);
+		exit();
+	}
 ?>

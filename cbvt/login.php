@@ -11,14 +11,18 @@
 
 	$driver = $drivers->find($driverinfo);
 
-	$count = count($driver);
-
-	if($count === 1){
-		$drivers->insert($driverinfo);
-		header('Location: http://localhost/cbvt/home.php');
+	foreach($driver as $tr){
+		$id = $tr["_id"];
+		header('Location: http://localhost/cbvt/home.php?id='.$id);
+		exit();
 	}
-	else{
-		header('Location: http://localhost/cbvt/home.php');
+
+	$drivers->insert($driverinfo);
+	$driver = $drivers->find($driverinfo);
+	foreach($driver as $tr){
+		$id = $tr["_id"];
+		header('Location: http://localhost/cbvt/home.php?id='.$id);
+		exit();
 	}
 
 ?>
