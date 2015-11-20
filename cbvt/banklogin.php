@@ -110,9 +110,8 @@
 		</div>
 	</nav>
 	<div class="overlay">
-		<form method="POST" action="login.php">
-			<input type="text" name="licensenumber" placeholder="License Number" autocomplete="off">
-			<input type="text" name="passportnumber" placeholder="Passport Number" autocomplete="off">
+		<form method="POST" action="loginbank.php">
+			<input type="text" name="bankid" placeholder="Bank ID" autocomplete="off">
 			<input type="submit" class="btn" value="Submit">
 		</form>
 	</div>
