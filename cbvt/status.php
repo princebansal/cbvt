@@ -1,14 +1,3 @@
-<?php
-	
-	$connection = new MongoCLient();
-	$database = $connection->CBVT;
-	$requests = $database->createCollection("requests");
-
-	$requestType = array('bankapproved' => false, 'dmvapproved' => true, 'requestdenied' => false);
-
-	$travelrequests = $requests->find($requestType);
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,11 +35,12 @@
 		.form{
 			position:absolute;
 			top:100px;
-			left:35%;
-			width:400px;
+			left:5%;
+			width:85%;
 			padding:40px;
-			border-radius:10px;
+			border-radius:5px;
 			z-index:0;
+			height:300px;
 			background-color:rgba(255,255,255,0.9);
 		}
 		.blur{
@@ -69,17 +59,46 @@
 			height:30px;
 			background-color:rgba(0,0,0,0);
 		}
-		.request{
-			position:relative;
-			top:65px;
-			height:280px;
-			width:90%;
-			margin-left:5%;
-			margin-right:5%;
-			margin-top:20px;
-			border-radius:10px;
-			z-index:0;
-			background-color:rgba(255,255,255,0.9);
+		nav{
+			position:fixed;
+			z-index:100;
+			background-color:white;
+		}
+		nav a{
+			color:#514b4b !important;
+			font-size:18px !important;
+			font-family: 'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif;
+		}
+		.brand-logo{
+			margin-left:30px;
+			font-size:25px !important;
+			font-family: 'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif;
+		}
+		.btn1{
+			margin-left:25%;
+			margin-top:15px;
+			width:300px;
+			background-color:#ff3a3f;
+		}
+		.btn1:hover{
+			margin-left:25%;
+			margin-top:15px;
+			width:300px;
+			background-color:#fff;
+			color:#514b4b;
+		}
+		.btn2{
+			margin-left:25%;
+			margin-top:15px;
+			width:300px;
+			background-color:#08a562;
+		}
+		.btn2:hover{
+			margin-left:25%;
+			margin-top:15px;
+			width:300px;
+			background-color:#fff;
+			color:#514b4b;
 		}
 		.left-side{
 			width:50%;
@@ -100,23 +119,21 @@
 			width:50%;
 			height:40%;
 			position:absolute;
-			top:0px;
+			top:15px;
 			left:0px;
 			padding:30px;
-			padding-top:0px;
 		}
 		.to{
 			width:50%;
 			height:40%;
 			position:absolute;
-			top:0px;
+			top:15px;
 			left:50%;
 			padding:30px;
-			padding-top:0px;
 		}
 		.vehicle{
 			position:absolute;
-			top:30%;
+			top:45%;
 			padding-left:30px;
 			margin-top:10px;
 			width:100%;
@@ -134,52 +151,6 @@
 			text-align:center;
 			color:#ff3a3f;
 			margin-top:20px;
-		}
-		nav{
-			position:fixed;
-			top:0px;
-			z-index:100;
-			background-color:white;
-		}
-		nav a{
-			color:#514b4b !important;
-			font-size:18px !important;
-			font-family: 'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif;
-		}
-		.brand-logo{
-			margin-left:30px;
-			font-size:25px !important;
-			font-family: 'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif;
-		}
-		.btn{
-			margin-left:30%;
-			margin-top:15px;
-			background-color:#F5800A
-		}
-		.btn1{
-			margin-left:1%;
-			margin-top:15px;
-			background-color:#08a562;
-		}
-		.btn2{
-			margin-left:1%;
-			margin-top:15px;
-			background-color:#ff3a3f;
-		}
-		.btn1:hover{
-			margin-left:1%;
-			margin-top:15px;
-			background-color:#fff;
-			color:black;
-		}
-		.btn2:hover{
-			margin-left:1%;
-			margin-top:15px;
-			background-color:#fff;
-			color:black;
-		}
-		.button-container{
-			margin-left:30%;
 		}
 		@media screen and (max-width: 990px) {
 			.overlay{
@@ -202,18 +173,34 @@
 		<div class="blur">
 			<img src="download.jpg" class="background">
 		</div>
+		<?php
+			$userid = $_GET["id"];
+	
+			$connection = new MongoCLient();
+			$database = $connection->CBVT;
+			$requests = $database->requests;
+
+			$requestType = array('owner' => $userid);
+
+			$travelrequests = $requests->find($requestType);
+
+			foreach($travelrequests as $tr){
+		?>
 		<nav>
 			<div class="nav-wrapper">
 				<a href="#!" class="brand-logo">Cross Border Vehicle Transport</a>
 				<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 				<ul class="right hide-on-med-and-down">
+					<li><a href="home.php?id=<?php echo $tr['owner'] ?>">New Request</a></li>
+					<li><a href="status.php?id=<?php echo $_GET['id'] ?>">Request Status</a></li>
+				</ul>
+				<ul class="side-nav" id="mobile-demo">
+					<li><a href="home.php">New Request</a></li>
+					<li><a href="status.php">Request Status</a></li>
 				</ul>
 			</div>
 		</nav>
-		<?php
-			foreach($travelrequests as $tr){
-		?>
-		<div class="request">
+		<div class="form">
 			<div class="left-side">
 				<div class="from">
 					<h6>From</h6>
@@ -224,40 +211,35 @@
 					<h4>31 December, 2015</h4>
 				</div>
 				<div class="vehicle">
-					<p>
-						Registeration Number : <span><?php echo $tr["registerationnumber"]; ?></span>
-					</p>
-					<p>
-						Bank Name : <span><?php echo $tr["bankname"]; ?></span>
-						<span style="float:right;margin-right:50px">Loan Number : <?php echo $tr["loannumber"]; ?></span>
-					</p>
-					<p>
-						Insurance Company : <span><?php echo $tr["companyname"]; ?></span>
-						<span style="float:right;margin-right:50px">Policy Number : <?php echo $tr["policynumber"]; ?></span>
-					</p>
-					<p>
-						Vehicle : <span><?php echo $tr["make"]; ?> <?php echo $tr["model"]; ?></span>
-						<span style="float:right;margin-right:50px">VIN : <?php echo $tr["vin"]; ?></span>
-					</p>
+					<p>Vehicle Registeration Number : <span><?php echo $tr["registerationnumber"]; ?></span></p>
+					<p>Vehicle : <span><?php echo $tr["make"]; ?></span> <span><?php echo $tr["model"]; ?></span></p>
+					<p>VIN : <span><?php echo $tr["vin"]; ?></span></p>
 				</div>
 			</div>
-			<div class="right-side">
-				<h5>Owns Vehicle</h5>
-				<h2>Yes</h2>
-				<div class="button-container">
-					<a class="btn btn1" href="bankapproverequest.php?id=<?php echo $tr['_id'] ?>">Approve</a>
-					<a class="btn btn2">Reject</a>
-				</div>
-			</div>
+			<?php
+				$requeststatus = $tr["requeststatus"];
+				if(!$requeststatus){
+					echo '
+						<div class="right-side">
+							<h5>Request Status</h5>
+							<h2>Pending</h2>
+							<a class="btn btn1">Cancel Request</a>
+						</div>
+					';
+				}
+				else{
+					echo '
+						<div class="right-side">
+							<h5>Request Status</h5>
+							<h2 style="color:#08a562">Approved</h2>
+							<a class="btn btn2">View Approval</a>
+						</div>
+					';
+				}
+			?>
 		</div>
 
-		<?php 
-			} 
-		?>
-
-		<div class="footer">
-			<p style="opacity:0;">Hey</p>
-		</div>
+		<?php } ?>
 
 		<script type="text/javascript" src="js/materialize.js"></script>
 	</body>

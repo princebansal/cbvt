@@ -12,6 +12,8 @@
 	$requests->update($condition, 
       array('$set' => $update));
 
+	header('Location: http://localhost/cbvt/bank.php');
+
 ?>
 
 <!DOCTYPE html>

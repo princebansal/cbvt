@@ -18,6 +18,7 @@
 	$loannumber = $_POST["loannumber"];
 	$companyname = $_POST["companyname"];
 	$policynumber = $_POST["policynumber"];
+	$owner = $_POST["owner"];
 
 	$requestinfo = array(
 			"licensenumber" => $licensenumber,
@@ -33,6 +34,7 @@
 			"loannumber" => $loannumber,
 			"companyname" => $companyname,
 			"policynumber" => $policynumber,
+			"owner" => $owner,
 			"requeststatus" => false,
 			"dmvapproved" => false,
 			"bankapproved" => false,

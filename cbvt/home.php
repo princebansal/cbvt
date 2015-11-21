@@ -105,7 +105,7 @@
 				<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 				<ul class="right hide-on-med-and-down">
 					<li><a href="home.php">New Request</a></li>
-					<li><a href="status.php">Request Status</a></li>
+					<li><a href="status.php?id=<?php echo $_GET['id'] ?>">Request Status</a></li>
 				</ul>
 				<ul class="side-nav" id="mobile-demo">
 					<li><a href="home.php">New Request</a></li>
@@ -126,6 +126,7 @@
 				<input type="text" name="loannumber" placeholder="Loan Number">
 				<input type="text" name="companyname" placeholder="Company Name">
 				<input type="text" name="policynumber" placeholder="Policy Number">
+				<input type="hidden" name="owner" value="<?php echo $_GET['id']; ?>">
 				<input type="submit" class="btn" value="Submit">
 			</form>
 		</div>
