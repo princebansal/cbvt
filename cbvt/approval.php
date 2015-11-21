@@ -139,6 +139,10 @@
 			width:100%;
 			font-size:17px;
 		}
+		.barcode{
+			margin-left:130px;
+			margin-top:60px;
+		}
 		h4{
 			font-size:18px;
 		}
@@ -174,24 +178,25 @@
 			<img src="download.jpg" class="background">
 		</div>
 		<?php
-			$userid = $_GET["id"];
+			$requestid = $_GET["id"];
 	
 			$connection = new MongoCLient();
 			$database = $connection->CBVT;
 			$requests = $database->requests;
 
-			$requestType = array('owner' => $userid);
+			$requestType = array("_id" => new MongoId($requestid));
 
 			$travelrequests = $requests->find($requestType);
 
-			foreach($travelrequests as $tr){
 		?>
+
 		<nav>
 			<div class="nav-wrapper">
 				<a href="#!" class="brand-logo">Cross Border Vehicle Transport</a>
 				<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 				<ul class="right hide-on-med-and-down">
-					<li><a href="home.php?id=<?php echo $tr['owner'] ?>">New Request</a></li>
+					<li><a href="status.php?id=<?php foreach($travelrequests as $tr){ echo $tr['owner']; } ?>">Back</a></li>
+					<li><a href="home.php">New Request</a></li>
 					<li><a href="status.php?id=<?php echo $_GET['id'] ?>">Request Status</a></li>
 				</ul>
 				<ul class="side-nav" id="mobile-demo">
@@ -200,6 +205,9 @@
 				</ul>
 			</div>
 		</nav>
+		<?php
+			foreach($travelrequests as $tr){
+		?>
 		<div class="form">
 			<div class="left-side">
 				<div class="from">
@@ -216,30 +224,13 @@
 					<p>VIN : <span><?php echo $tr["vin"]; ?></span></p>
 				</div>
 			</div>
-			<?php
-				$requeststatus = $tr["requeststatus"];
-				if(!$requeststatus){
-					echo '
-						<div class="right-side">
-							<h5>Request Status</h5>
-							<h2>Pending</h2>
-							<a class="btn btn1">Cancel Request</a>
-						</div>
-					';
-				}
-				else{
-					echo '
-						<div class="right-side">
-							<h5>Request Status</h5>
-							<h2 style="color:#08a562">Approved</h2>
-							<a class="btn btn2" href="approval.php?id='; echo $tr['_id']; echo '">View Approval</a>
-						</div>
-					';
-				}
-			?>
+			<div class="right-side">
+				<img alt="testing" class="barcode" src="/cbvt/barcode.php?size=120&text=<?php echo $tr["_id"] ?>" />
+			</div>
 		</div>
 
 		<?php } ?>
+		
 
 		<script type="text/javascript" src="js/materialize.js"></script>
 	</body>
