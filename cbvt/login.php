@@ -16,12 +16,13 @@
 		header('Location: http://localhost/cbvt/home.php?id='.$id);
 		exit();
 	}
-
-	$drivers->insert($driverinfo);
-	$driver = $drivers->find($driverinfo);
+	$photo = "";
+	$driverinfor = array('licensenumber' => $licensenumber, 'passportnumber' => $passportnumber, 'photo' => $photo);
+	$drivers->insert($driverinfor);
+	$driver = $drivers->find($driverinfor);
 	foreach($driver as $tr){
 		$id = $tr["_id"];
-		header('Location: http://localhost/cbvt/home.php?id='.$id);
+		header('Location: http://localhost/cbvt/uploadphoto.php?id='.$id);
 		exit();
 	}
 

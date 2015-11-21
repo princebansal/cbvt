@@ -19,7 +19,20 @@
 					$file_destination = 'uploads/'.$file_name_new;
 					
 					if(move_uploaded_file($file_tmp, $file_destination)){
-						echo $file_destination;
+						echo $_POST['id'];
+						$connection = new MongoCLient();
+						$database = $connection->CBVT;
+						$driver = $database->drivers;
+
+						$id = $_POST["id"];
+						$condition = array("_id" => new MongoId($id));
+
+						$update = array("photo" => $file_name_new);
+
+						$driver->update($condition, 
+					      array('$set' => $update));
+
+						header('Location: http://localhost/cbvt/home.php?id='.$id);
 					}
 					else{
 						echo "Failed";
