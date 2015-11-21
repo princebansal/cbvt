@@ -1,7 +1,9 @@
 <?php
-	echo "In Here";
+	echo "In Here1";
 	$connection = new MongoCLient();
+	echo "In Here2";
 	$database = $connection->CBVT;
+	echo "In Here3";
 	$drivers = $database->createCollection('drivers');
 	
 	echo "database connection";
