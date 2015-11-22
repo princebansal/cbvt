@@ -9,7 +9,7 @@
 	echo "database connection";
 	$licensenumber = $_POST["licensenumber"];
 	$passportnumber = $_POST["passportnumber"];
-
+	
 	$driverinfo = array('licensenumber' => $licensenumber, 'passportnumber' => $passportnumber);
 
 	$driver = $drivers->find($driverinfo);
